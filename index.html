@@ -87,8 +87,10 @@
             }
             
             // 点击同意按钮后将状态保存到本地存储
-            $('#agreeDisclaimer').click(function() {
+            $('#agreeDisclaimer').click(function(event) {
+                event.preventDefault(); // 阻止默认行为
                 localStorage.setItem('disclaimerAgreed', 'true');
+                $('#disclaimerModal').modal('hide'); // 隐藏模态框
             });
         });
     </script>
