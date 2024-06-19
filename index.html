@@ -33,7 +33,6 @@
                     <li><a target="_blank" href="/">购买</a></li>
                     <li><a target="_blank" href="/">查询订单</a></li>
                     <li><a target="_blank" href="/">下载驱动</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#disclaimerModal">免责条款</a></li>
                 </ul>
             </div>
         </div>
@@ -76,5 +75,11 @@
     
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        // 当页面加载完成后，显示免责条款模态框
+        $(document).ready(function() {
+            $('#disclaimerModal').modal('show');
+        });
+    </script>
 </body>
 </html>
