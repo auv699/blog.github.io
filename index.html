@@ -67,7 +67,7 @@
                     <p>可以根据需要添加更多内容。</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" id="agreeDisclaimer">同意并关闭</button>
                 </div>
             </div>
         </div>
@@ -76,9 +76,20 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
-        // 当页面加载完成后，显示免责条款模态框
+        // 判断是否需要显示免责条款模态框
         $(document).ready(function() {
-            $('#disclaimerModal').modal('show');
+            // 检查本地存储中是否有记录
+            var agreed = localStorage.getItem('disclaimerAgreed');
+            
+            // 如果没有记录或者用户尚未同意，显示模态框
+            if (!agreed) {
+                $('#disclaimerModal').modal('show');
+            }
+            
+            // 点击同意按钮后将状态保存到本地存储
+            $('#agreeDisclaimer').click(function() {
+                localStorage.setItem('disclaimerAgreed', 'true');
+            });
         });
     </script>
 </body>
