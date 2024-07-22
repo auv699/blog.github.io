@@ -50,61 +50,8 @@
         <span style="display:inline-block;">© 2024</span>
         <span style="display:inline-block;">由VM自助研发驱动赞助推出</span>
     </div>
-    <!-- 免责条款模态框 -->
-    <div class="modal fade" id="disclaimerModal" tabindex="-1" role="dialog" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="disclaimerModalLabel">免责条款</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>感谢您使用我们的软件和访问我们的网页。在使用本软件和网页之前，请务必仔细阅读以下免责声明。使用本软件和网页即表示您同意遵守以下条款和条件。
-
-内容的准确性: 我们努力确保软件和网页上的信息和内容准确无误。然而，我们不保证信息的绝对准确性，也不对由于信息的不准确或遗漏导致的任何损失或损害负责。
-
-用户行为: 您使用本软件和网页时，应遵守所有适用的法律法规。您不得利用本软件和网页进行任何违法、欺诈或侵犯他人权利的活动。我们不对用户在软件和网页上的行为负责。
-
-第三方链接: 本软件和网页可能包含指向第三方网站或服务的链接。这些链接仅为方便用户提供。链接的第三方网站内容和隐私政策与本软件和网页无关，我们不对其负责。
-
-服务中断: 我们致力于保持软件和网页的正常运行。然而，我们不保证软件和网页将不间断或无错误运行，并对由此可能引起的任何损失或损害不承担责任。
-
-知识产权: 本软件和网页及其所有内容（包括但不限于文本、图形、标志、按钮图标、图像、音频剪辑、数码下载、数据编译和软件）均受版权法和其他知识产权法保护。未经许可，禁止复制、修改、传播、重新发布或商业利用本软件和网页内容。
-
-免责声明的适用法律: 本免责声明受所适用法律的约束，并按照该法律进行解释。
-
-变更和修订: 我们保留随时更新或修改本免责声明的权利。请定期查看本页以了解任何更新或变更。</p>
-                    <p>如果您对此免责声明有任何疑问，请联系我们</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="agreeDisclaimer">我同意以上条款</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script>
-        // 判断是否需要显示免责条款模态框
-        $(document).ready(function() {
-            // 检查本地存储中是否有记录
-            var agreed = localStorage.getItem('disclaimerAgreed');
-            
-            // 如果没有记录或者用户尚未同意，显示模态框
-            if (!agreed) {
-                $('#disclaimerModal').modal('show');
-            }
-            
-            // 点击同意按钮后将状态保存到本地存储
-            $('#agreeDisclaimer').click(function(event) {
-                event.preventDefault(); // 阻止默认行为
-                localStorage.setItem('disclaimerAgreed', 'true');
-                $('#disclaimerModal').modal('hide'); // 隐藏模态框
-            });
-        });
-    </script>
 </body>
 </html>
