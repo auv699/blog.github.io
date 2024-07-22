@@ -283,3 +283,16 @@ p {
     margin-top: 20px;
     display: inline-block;
 }
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-brand img {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
