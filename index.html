@@ -11,9 +11,39 @@
     <link rel="shortcut icon" href="favicon.ico">
     <style>
         /* 自定义样式可以在 main.css 中进行 */
+        #loader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
     <div class="navbar custom-navbar navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -40,10 +70,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h2>
-                        <img src="https://lf1-cdn-tos.bytegoofy.com/goofy/ies/douyin_web/public/favicon.ico" alt="女孩抖音" style="width:32px;height:32px;vertical-align:middle;margin-right:10px;">
-                        女孩抖音
-                    </h2>
+                    <h2>已经停用</h2>
                     <!-- 可添加其他内容 -->
                 </div>
             </div>
@@ -56,5 +83,12 @@
     
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        // 隐藏加载动画
+        window.addEventListener('load', function() {
+            var loader = document.getElementById('loader');
+            loader.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
