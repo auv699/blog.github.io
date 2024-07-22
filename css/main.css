@@ -82,3 +82,9 @@
         padding: 15px 0;
     }
 }
+@media (max-width: 768px) {
+    .navbar-brand img {
+        width: 24px;
+        height: 24px;
+    }
+}
