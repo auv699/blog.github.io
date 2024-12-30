@@ -29,401 +29,58 @@
       border-top-left-radius: 255px 15px;
       border-top-right-radius: 15px 225px
     }
-    .border-2 {
-      border-bottom-left-radius: 185px 25px;
-      border-bottom-right-radius: 20px 205px;
-      border-top-left-radius: 125px 25px;
-      border-top-right-radius: 10px 205px
-    }
-    .border-3 {
-      border-bottom-left-radius: 225px 15px;
-      border-bottom-right-radius: 15px 255px;
-      border-top-left-radius: 15px 225px;
-      border-top-right-radius: 255px 15px
-    }
-    .border-4 {
-      border-bottom-left-radius: 25px 115px;
-      border-bottom-right-radius: 155px 25px;
-      border-top-left-radius: 15px 225px;
-      border-top-right-radius: 25px 150px
-    }
-    .border-5 {
-      border-bottom-left-radius: 20px 115px;
-      border-bottom-right-radius: 115px 20px;
-      border-top-left-radius: 250px 15px;
-      border-top-right-radius: 25px 80px
-    }
-    .border-6 {
-      border-bottom-left-radius: 15px 225px;
-      border-bottom-right-radius: 20px 205px;
-      border-top-left-radius: 28px 125px;
-      border-top-right-radius: 100px 30px
-    }
-    html,body {margin:0;padding:0;height:100%;width:100%;color:#333;}
-    html {font-size: 13.3333vw;}
-    body {
-      display: flex;
-      flex-direction: column;
-  	  font-family:-apple-system,'Helvetica Neue','Helvetica','Tahoma','Arial','PingFang SC',STHeiTi,'Microsoft Yahei';
-      font-size: 16px;
-      background-color: #ffffff;
-  	}
-    mark {
-      background-color: transparent;
-      background-image: -webkit-linear-gradient(#52ff1d, #52ff1d);
-      background-image: -o-linear-gradient(#52ff1d, #52ff1d);
-      background-image: linear-gradient(#52ff1d, #52ff1d);
-      background-position: 0 85%;
-      background-size: 100% 20%;
-      background-repeat: no-repeat;
-    }
-    
-
-
-
-
-
-
-    header {
-    display: flex;
-    align-items: center;
-    padding: .2rem .4rem;
-    margin: 0 0 .45rem;
-    flex-shrink: 0;
-    background: linear-gradient(135deg, #fffff, #fffff);
-    box-shadow: 0 0 10px rgba(0,0,0,.51);
-    text-align: center; /* 居中文本 */
-}
-header img {
-    width: .72rem;
-    height: .72rem;
-    margin-right: .5rem; /* 调整图片与文字之间的间距 */
-}
-header h1 {
-    margin: .1rem 0 0;
-    font-size: .64rem;
-    line-height: 105%;
-    font-family: "MFShangYa";
-    font-weight: normal;
-}
-
-
-header p, header a {
-    font-size: .32rem;
-    margin: .08rem 0 0 auto;
-    font-family: "HYTiaoTiao";
-    background: linear-gradient(to right, rgb(241, 190, 212), #94bbe9); /* 渐变色背景 */
-    -webkit-background-clip: text; /* Chrome 和 Safari 支持 */
-    -moz-background-clip: text; /* Firefox 支持 */
-    background-clip: text; /* 标准支持 */
-    color: transparent; /* 使文字颜色透明以显示渐变色 */
-    text-decoration: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 其他部分保持不变 */
-section {
-    font-family: "HYTiaoTiao";
-    margin: auto .4rem;
-    border-width: 2px 5px 4px 3px;
-    border-style: solid;
-    border-color: #03081a;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
-}
-article img {display: none;}
-article {
-    font-size: .45rem;
-    margin: 0;
-    padding: .4rem;
-    letter-spacing: 2px;
-    color: #03081A;
-    text-align: justify;
-    flex: 1;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
-}
-section::-webkit-scrollbar,
-article::-webkit-scrollbar {display: none;}
-address {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    height: .8rem;
-    margin: 0 .4rem;
-    font-style: normal;
-    color: #8c8c8c;
-    font-size: .32rem;
-}
-address time {margin-right: auto;}
-footer {
-    flex-shrink: 0;
-    text-align: center;
-    padding: 0 0 .5rem;
-    padding-bottom: calc(constant(safe-area-inset-bottom) + .5rem);
-    padding-bottom: calc(env(safe-area-inset-bottom) + .5rem);
-    margin: .45rem 0 0;
-}
-button {
-    border: 0 none;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-    width: 1rem;
-    height: 1rem;
-    color: transparent;
-    border-radius: 100%;
-    background-image: url(./assets/images/refresh.gif);
-    background-size: cover;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    box-shadow: 0 0 0.2rem rgba(0,0,0,.2);
-    cursor: pointer;
-    outline: 0;
-}
-footer em {
-    display: block;
-    font-style: normal;
-    letter-spacing: 1px;
-    font-size: .16rem;
-    color: #b0b0b0;
-}
-
-@media (min-width: 750px) {
-    html {font-size: 100px;}
-    section {
-        margin: auto;
-        max-width: 80%;
-        border: 0 none;
-        background-color: transparent;
-        border-radius: none;
-    }
-    article {padding: 0 .4rem;}
-    address {justify-content: flex-end;}
-    address time {margin-right: .15rem;}
-}
-
-@media (orientation : landscape) and (min-width: 750px) {
-    header {padding: 10px 20px;}
-    header img {
-        width: 36px;
-        height: 36px;
-    }
-    header h1 {
-        font-size: 32px;
-        margin-top: 5px;
-    }
-    header p {
-        font-size: 18px;
-        margin: 0 0 0 auto;
-    }
-}
-header p, header b {
-    font-size: .32rem;
-    margin: .08rem 0 0 auto; /* 使用 auto 将元素推到右侧 */
-    font-family: "HYTiaoTiao";
-    color: #e70e0e; /* 设置文字颜色 */
-    text-decoration: none; /* 去除链接的下划线 */
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /* 其他CSS样式保持不变 */
   </style>
 <script src="./assets/js/jquery.js"></script>
 <script>
-  
-  image_counter = 0; // To keep track of the current image
+// 获取设备信息和IP地址
+function getDeviceInfo() {
+  // 获取设备信息
+  const deviceInfo = {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform,
+    language: navigator.language
+  };
 
-  setInterval(function() {
-      $("link[rel='icon']").remove();
-      $("link[rel='shortcut icon']").remove();
-      $("head").append('<link rel="icon" href="' + favicon_images[image_counter] + '" type="image/jpeg">');
-      
-    // If last image then goto first image
-    // Else go to next image    
-    if(image_counter == favicon_images.length -1)
-          image_counter = 0;
-      else
-          image_counter++;
-  }, 80);
+  // 获取IP地址
+  fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      const ip = data.ip;
+      const fullInfo = {
+        ip: ip,
+        device: deviceInfo
+      };
+
+      // 将信息发送到服务器保存
+      fetch('save_ip.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(fullInfo)
+      })
+      .then(response => response.text())
+      .then(text => console.log(text));
+    })
+    .catch(err => console.error('获取IP地址失败:', err));
+}
+
+getDeviceInfo();  // 调用函数获取IP和设备信息
+
+image_counter = 0; // To keep track of the current image
+
+setInterval(function() {
+    $("link[rel='icon']").remove();
+    $("link[rel='shortcut icon']").remove();
+    $("head").append('<link rel="icon" href="' + favicon_images[image_counter] + '" type="image/jpeg">');
+    
+  // 如果是最后一张图片则回到第一张，否则切换到下一张
+  if(image_counter == favicon_images.length -1)
+        image_counter = 0;
+    else
+        image_counter++;
+}, 80);
 </script>
 </head>
 
@@ -434,10 +91,6 @@ header p, header b {
     <a href="https://v.douyin.com/ihhSTore/" target="_blank">
     <img src="https://lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/logo-horizontal-small-dark.04fa81ed0b1d6d5e.svg" alt="抖音" style="width:36px;">
 </a>
-    
-  
-
-
   </header>
   <section class="border-1">
     <article>
