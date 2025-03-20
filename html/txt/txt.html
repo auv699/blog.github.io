@@ -13,24 +13,28 @@
 <body>
 
     <h2>📝 自适应记事本</h2>
+    <p>当前笔记 ID: <span id="noteIdDisplay"></span></p>
     <div contenteditable="true" id="editor" placeholder="在这里输入内容..."></div>
 
     <br>
     <button onclick="saveNote()">💾 保存</button>
-    <button onclick="shareNote()">🔗 生成分享链接</button>
+    <button onclick="generateNewNote()">🆕 创建新笔记</button>
     <p id="status"></p>
 
     <script>
         const editor = document.getElementById("editor");
+        const status = document.getElementById("status");
+        const noteIdDisplay = document.getElementById("noteIdDisplay");
 
-        // 获取 URL 参数中的 noteId
-        function getNoteIdFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get("noteId") || "default";  // 默认存储 ID
+        // 解析 URL 路径获取笔记 ID
+        function getNoteIdFromPath() {
+            const pathParts = window.location.pathname.split("/").filter(p => p); // 解析路径
+            return pathParts.length > 0 ? pathParts[pathParts.length - 1] : "1"; // 取最后一个部分
         }
 
-        const noteId = getNoteIdFromURL();
-        
+        let noteId = getNoteIdFromPath();
+        noteIdDisplay.innerText = noteId;
+
         // 加载存储的笔记
         function loadNote() {
             const savedContent = localStorage.getItem("note_" + noteId);
@@ -42,16 +46,17 @@
         // 保存笔记
         function saveNote() {
             localStorage.setItem("note_" + noteId, editor.innerHTML);
-            document.getElementById("status").innerText = "✅ 笔记已保存！";
+            status.innerText = "✅ 笔记已保存！";
         }
 
-        // 生成分享链接
-        function shareNote() {
-            const uniqueId = Math.random().toString(36).substr(2, 9); // 生成随机ID
-            localStorage.setItem("note_" + uniqueId, editor.innerHTML);
-            const shareURL = window.location.origin + window.location.pathname + "?noteId=" + uniqueId;
-            navigator.clipboard.writeText(shareURL);
-            document.getElementById("status").innerText = "🔗 分享链接已复制！";
+        // 创建新笔记（随机生成 ID，并修改 URL）
+        function generateNewNote() {
+            const newNoteId = Math.floor(Math.random() * 100000).toString(); // 生成随机数字 ID
+            window.history.pushState(null, "", "/" + newNoteId); // 修改 URL
+            noteId = newNoteId;
+            noteIdDisplay.innerText = noteId;
+            editor.innerHTML = ""; // 清空编辑器
+            status.innerText = "🆕 已创建新笔记！";
         }
 
         loadNote();  // 加载笔记
