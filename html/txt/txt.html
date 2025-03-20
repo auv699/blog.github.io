@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自适应记事本</title>
+    <title>GitHub Gist 记事本</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
         #editor { width: 90%; height: 400px; border: 1px solid #ccc; padding: 10px; margin-top: 10px; overflow: auto; }
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <h2>📝 自适应记事本</h2>
+    <h2>📝 GitHub Gist 记事本</h2>
     <p>当前笔记 ID: <span id="noteIdDisplay"></span></p>
     <div contenteditable="true" id="editor" placeholder="在这里输入内容..."></div>
 
@@ -24,21 +24,23 @@
     <p id="status"></p>
 
     <script>
+        const GITHUB_TOKEN = "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";  // key
         const editor = document.getElementById("editor");
         const status = document.getElementById("status");
         const noteIdDisplay = document.getElementById("noteIdDisplay");
         const uploadImage = document.getElementById("uploadImage");
 
-        // 获取笔记 ID
+        // 获取笔记 ID（从 URL # 解析）
         function getNoteId() {
-            return location.hash.replace("#", "") || "default-note"; // 默认笔记
+            return location.hash.replace("#", "") || null;
         }
 
         let noteId = getNoteId();
-        noteIdDisplay.innerText = noteId;
+        noteIdDisplay.innerText = noteId || "未保存";
 
-        // 加载远程笔记
+        // 加载笔记（从 GitHub Gist）
         async function loadNote() {
+            if (!noteId) return;
             try {
                 let response = await fetch(`https://api.github.com/gists/${noteId}`);
                 let data = await response.json();
@@ -46,7 +48,7 @@
                     editor.innerHTML = data.files["note.txt"].content;
                 }
             } catch (error) {
-                console.log("❌ 笔记加载失败：", error);
+                console.error("❌ 加载失败：", error);
             }
         }
 
@@ -61,16 +63,36 @@
                 }
             };
 
-            let response = await fetch("https://api.github.com/gists", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+            let url = "https://api.github.com/gists";
+            let method = "POST";  // 默认创建新的 Gist
+
+            if (noteId) {
+                url = `https://api.github.com/gists/${noteId}`;
+                method = "PATCH";  // 如果有笔记 ID，更新现有的 Gist
+            }
+
+            let response = await fetch(url, {
+                method: method,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GITHUB_TOKEN}`  // ✅ API 认证
+                },
                 body: JSON.stringify(payload)
             });
 
             let data = await response.json();
-            location.hash = data.id;  // 更新 URL
-            noteIdDisplay.innerText = data.id;
+            noteId = data.id;  // 更新 ID
+            location.hash = noteId;  // 更新 URL
+            noteIdDisplay.innerText = noteId;
             status.innerText = "✅ 笔记已保存！";
+        }
+
+        // 生成新笔记
+        function generateNewNote() {
+            location.hash = "";
+            noteId = null;
+            editor.innerHTML = "";
+            noteIdDisplay.innerText = "未保存";
         }
 
         // 生成分享链接
@@ -79,6 +101,22 @@
             navigator.clipboard.writeText(shareURL);
             status.innerText = "🔗 分享链接已复制！";
         }
+
+        // 上传图片（转换为 Base64）
+        uploadImage.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const img = document.createElement("img");
+                    img.src = event.target.result;
+                    img.style.maxWidth = "100%";
+                    editor.appendChild(img);
+                    saveNote(); // 自动保存
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         // 监听 URL 变化
         window.addEventListener("hashchange", () => {
