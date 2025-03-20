@@ -26,13 +26,12 @@
         const status = document.getElementById("status");
         const noteIdDisplay = document.getElementById("noteIdDisplay");
 
-        // 解析 URL 路径获取笔记 ID
-        function getNoteIdFromPath() {
-            const pathParts = window.location.pathname.split("/").filter(p => p); // 解析路径
-            return pathParts.length > 0 ? pathParts[pathParts.length - 1] : "1"; // 取最后一个部分
+        // 解析 URL 获取笔记 ID（使用 hash 方式）
+        function getNoteId() {
+            return location.hash.replace("#", "") || "1"; // 默认 ID 为 1
         }
 
-        let noteId = getNoteIdFromPath();
+        let noteId = getNoteId();
         noteIdDisplay.innerText = noteId;
 
         // 加载存储的笔记
@@ -43,18 +42,24 @@
             }
         }
 
+        // 监听 URL 变化
+        window.addEventListener("hashchange", () => {
+            noteId = getNoteId();
+            noteIdDisplay.innerText = noteId;
+            loadNote();
+        });
+
         // 保存笔记
         function saveNote() {
             localStorage.setItem("note_" + noteId, editor.innerHTML);
             status.innerText = "✅ 笔记已保存！";
         }
 
-        // 创建新笔记（随机生成 ID，并修改 URL）
+        // 创建新笔记（使用 hash URL 避免 404）
         function generateNewNote() {
             const newNoteId = Math.floor(Math.random() * 100000).toString(); // 生成随机数字 ID
-            window.history.pushState(null, "", "/" + newNoteId); // 修改 URL
-            noteId = newNoteId;
-            noteIdDisplay.innerText = noteId;
+            location.hash = newNoteId; // 修改 URL，不会触发 404
+            noteIdDisplay.innerText = newNoteId;
             editor.innerHTML = ""; // 清空编辑器
             status.innerText = "🆕 已创建新笔记！";
         }
