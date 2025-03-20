@@ -3,129 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Gist 记事本</title>
+    <title>自适应记事本</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        #editor { width: 90%; height: 400px; border: 1px solid #ccc; padding: 10px; margin-top: 10px; overflow: auto; }
-        button, input { margin: 5px; padding: 10px; cursor: pointer; }
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        textarea { width: 100%; height: 200px; margin-bottom: 10px; }
+        button { padding: 10px 15px; margin-right: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <h2>📝 GitHub Gist 记事本</h2>
-    <p>当前笔记 ID: <span id="noteIdDisplay"></span></p>
-    <div contenteditable="true" id="editor" placeholder="在这里输入内容..."></div>
-
-    <br>
-    <input type="file" id="uploadImage" accept="image/*">
+    <h2>📝 自适应记事本</h2>
+    <textarea id="noteContent" placeholder="输入你的内容..."></textarea>
+    <input type="file" id="imageUpload" accept="image/*">
     <button onclick="saveNote()">💾 保存</button>
-    <button onclick="generateNewNote()">🆕 创建新笔记</button>
-    <button onclick="shareNote()">🔗 生成分享链接</button>
+    <button onclick="loadNote()">📂 加载</button>
+    
     <p id="status"></p>
+    <p><strong>分享链接：</strong> <a id="shareLink" target="_blank"></a></p>
 
     <script>
-        const GITHUB_TOKEN = "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";  // key
-        const editor = document.getElementById("editor");
-        const status = document.getElementById("status");
-        const noteIdDisplay = document.getElementById("noteIdDisplay");
-        const uploadImage = document.getElementById("uploadImage");
+        const GITHUB_TOKEN = "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";  // ❗ 替换为你的 GitHub Token
+        let gistId = localStorage.getItem("gistId"); // 记住上次保存的 Gist
 
-        // 获取笔记 ID（从 URL # 解析）
-        function getNoteId() {
-            return location.hash.replace("#", "") || null;
-        }
-
-        let noteId = getNoteId();
-        noteIdDisplay.innerText = noteId || "未保存";
-
-        // 加载笔记（从 GitHub Gist）
-        async function loadNote() {
-            if (!noteId) return;
-            try {
-                let response = await fetch(`https://api.github.com/gists/${noteId}`);
-                let data = await response.json();
-                if (data.files && data.files["note.txt"]) {
-                    editor.innerHTML = data.files["note.txt"].content;
-                }
-            } catch (error) {
-                console.error("❌ 加载失败：", error);
-            }
-        }
-
-        // 保存笔记到 GitHub Gist
         async function saveNote() {
-            let content = editor.innerHTML;
-            let payload = {
-                "description": "共享记事本",
-                "public": true,
-                "files": {
-                    "note.txt": { "content": content }
-                }
-            };
+            let content = document.getElementById("noteContent").value;
+            let imageFile = document.getElementById("imageUpload").files[0];
+            let imageData = "";
 
-            let url = "https://api.github.com/gists";
-            let method = "POST";  // 默认创建新的 Gist
-
-            if (noteId) {
-                url = `https://api.github.com/gists/${noteId}`;
-                method = "PATCH";  // 如果有笔记 ID，更新现有的 Gist
+            if (imageFile) {
+                let reader = new FileReader();
+                reader.onloadend = function () {
+                    imageData = reader.result.split(",")[1]; // 获取 Base64 数据
+                    uploadGist(content, imageData);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                uploadGist(content, imageData);
             }
+        }
+
+        async function uploadGist(text, image) {
+            let files = { "note.txt": { "content": text } };
+            if (image) {
+                files["image.txt"] = { "content": image }; // 存储 Base64 图片
+            }
+
+            let method = gistId ? "PATCH" : "POST";
+            let url = gistId ? `https://api.github.com/gists/${gistId}` : "https://api.github.com/gists";
 
             let response = await fetch(url, {
                 method: method,
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${GITHUB_TOKEN}`  // ✅ API 认证
+                    "Authorization": `Bearer ${GITHUB_TOKEN}`,
+                    "Accept": "application/vnd.github.v3+json",
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ "description": "记事本 Gist", "public": true, "files": files })
             });
 
             let data = await response.json();
-            noteId = data.id;  // 更新 ID
-            location.hash = noteId;  // 更新 URL
-            noteIdDisplay.innerText = noteId;
-            status.innerText = "✅ 笔记已保存！";
-        }
-
-        // 生成新笔记
-        function generateNewNote() {
-            location.hash = "";
-            noteId = null;
-            editor.innerHTML = "";
-            noteIdDisplay.innerText = "未保存";
-        }
-
-        // 生成分享链接
-        function shareNote() {
-            let shareURL = window.location.origin + window.location.pathname + "#" + noteId;
-            navigator.clipboard.writeText(shareURL);
-            status.innerText = "🔗 分享链接已复制！";
-        }
-
-        // 上传图片（转换为 Base64）
-        uploadImage.addEventListener("change", function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    const img = document.createElement("img");
-                    img.src = event.target.result;
-                    img.style.maxWidth = "100%";
-                    editor.appendChild(img);
-                    saveNote(); // 自动保存
-                };
-                reader.readAsDataURL(file);
+            if (data.id) {
+                gistId = data.id;
+                localStorage.setItem("gistId", gistId);
+                document.getElementById("shareLink").href = `?id=${gistId}`;
+                document.getElementById("shareLink").textContent = `查看 Gist`;
+                document.getElementById("status").textContent = "✅ 保存成功！";
+            } else {
+                document.getElementById("status").textContent = "❌ 保存失败！";
             }
-        });
+        }
 
-        // 监听 URL 变化
-        window.addEventListener("hashchange", () => {
-            noteId = getNoteId();
-            noteIdDisplay.innerText = noteId;
-            loadNote();
-        });
+        async function loadNote() {
+            let params = new URLSearchParams(window.location.search);
+            let id = params.get("id") || gistId;
 
-        loadNote(); // 加载笔记
+            if (!id) {
+                document.getElementById("status").textContent = "⚠ 没有找到保存的笔记！";
+                return;
+            }
+
+            let response = await fetch(`https://api.github.com/gists/${id}`);
+            let data = await response.json();
+
+            if (data.files["note.txt"]) {
+                document.getElementById("noteContent").value = data.files["note.txt"].content;
+            }
+            if (data.files["image.txt"]) {
+                let img = document.createElement("img");
+                img.src = "data:image/png;base64," + data.files["image.txt"].content;
+                img.style.maxWidth = "100%";
+                document.body.appendChild(img);
+            }
+
+            document.getElementById("status").textContent = "✅ 加载成功！";
+        }
+
+        window.onload = function () {
+            if (window.location.search.includes("id=")) {
+                loadNote();
+            }
+        };
     </script>
 
 </body>
