@@ -29,20 +29,55 @@
         const noteIdDisplay = document.getElementById("noteIdDisplay");
         const uploadImage = document.getElementById("uploadImage");
 
-        // 解析 URL 获取笔记 ID（使用 hash 避免 404）
+        // 获取笔记 ID
         function getNoteId() {
-            return location.hash.replace("#", "") || "1"; // 默认 ID 为 1
+            return location.hash.replace("#", "") || "default-note"; // 默认笔记
         }
 
         let noteId = getNoteId();
         noteIdDisplay.innerText = noteId;
 
-        // 加载笔记
-        function loadNote() {
-            const savedContent = localStorage.getItem("note_" + noteId);
-            if (savedContent) {
-                editor.innerHTML = savedContent; // 直接设置 HTML
+        // 加载远程笔记
+        async function loadNote() {
+            try {
+                let response = await fetch(`https://api.github.com/gists/${noteId}`);
+                let data = await response.json();
+                if (data.files && data.files["note.txt"]) {
+                    editor.innerHTML = data.files["note.txt"].content;
+                }
+            } catch (error) {
+                console.log("❌ 笔记加载失败：", error);
             }
+        }
+
+        // 保存笔记到 GitHub Gist
+        async function saveNote() {
+            let content = editor.innerHTML;
+            let payload = {
+                "description": "共享记事本",
+                "public": true,
+                "files": {
+                    "note.txt": { "content": content }
+                }
+            };
+
+            let response = await fetch("https://api.github.com/gists", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            let data = await response.json();
+            location.hash = data.id;  // 更新 URL
+            noteIdDisplay.innerText = data.id;
+            status.innerText = "✅ 笔记已保存！";
+        }
+
+        // 生成分享链接
+        function shareNote() {
+            let shareURL = window.location.origin + window.location.pathname + "#" + noteId;
+            navigator.clipboard.writeText(shareURL);
+            status.innerText = "🔗 分享链接已复制！";
         }
 
         // 监听 URL 变化
@@ -52,45 +87,7 @@
             loadNote();
         });
 
-        // 保存笔记
-        function saveNote() {
-            localStorage.setItem("note_" + noteId, editor.innerHTML);
-            status.innerText = "✅ 笔记已保存！";
-        }
-
-        // 创建新笔记（使用 hash URL 避免 404）
-        function generateNewNote() {
-            const newNoteId = Math.floor(Math.random() * 100000).toString(); // 生成随机数字 ID
-            location.hash = newNoteId; // 修改 URL
-            noteIdDisplay.innerText = newNoteId;
-            editor.innerHTML = ""; // 清空编辑器
-            status.innerText = "🆕 已创建新笔记！";
-        }
-
-        // 生成分享链接
-        function shareNote() {
-            const shareURL = window.location.origin + window.location.pathname + "#" + noteId;
-            navigator.clipboard.writeText(shareURL);
-            status.innerText = "🔗 分享链接已复制！";
-        }
-
-        // 处理图片上传
-        uploadImage.addEventListener("change", function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    const img = document.createElement("img");
-                    img.src = event.target.result;
-                    img.style.maxWidth = "100%";
-                    editor.appendChild(img);
-                    saveNote(); // 自动保存
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        loadNote();  // 加载笔记
+        loadNote(); // 加载笔记
     </script>
 
 </body>
