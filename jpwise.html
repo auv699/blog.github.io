@@ -1,0 +1,151 @@
+<html lang="ja"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>口座情報証明書</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        line-height: -3.2;
+        background-color: #f9f9f9;
+        position: relative;
+      }
+  
+      /* 水印样式 */
+      .watermark {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 100px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.1); /* 调整透明度以确保清晰可见 */
+        z-index: 0;
+        white-space: nowrap;
+        pointer-events: none;
+        user-select: none;
+      }
+  
+      .container {
+        background: #fff;
+        padding: 20px;
+        max-width: 700px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        z-index: 1;
+      }
+  
+      .header {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        position: relative;
+      }
+  
+      .avatar {
+        width: 100px;
+        height: 130px;
+        margin-right: 20px;
+        margin-bottom: 10px;
+       
+      }
+  
+      /* 右上角的SVG头像在头像区域内 */
+      .top-right-avatar {
+        top: 50%;  /* Vertically center the SVG */
+        left: 100%;  /* Position it to the right of the avatar */
+        transform: translateY(-50%); /* Vertically center it */
+        width: 106px;
+        height: 24px;
+        /* Adjust spacing between the avatar and the SVG */
+      }
+  
+      .company-info, .footer {
+        font-size: 0.9em;
+        color: #555;
+      }
+  
+      h2 {
+        margin-top: 30px;
+        font-size: 1.2em;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+  
+      a {
+        color: #0077cc;
+        text-decoration: none;
+      }
+  
+      @media (max-width: 600px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+  
+        .avatar {
+          margin-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 水印 -->
+    <div class="watermark">wise</div>
+  
+    <div class="container">
+      <div class="header">
+        
+        <!-- 右上角的SVG头像移到这里 -->
+        
+        <svg class="top-right-avatar" xmlns="http://www.w3.org/2000/svg" width="106" height="24" fill="none">
+          <path fill="#163300" d="M58.7377.358803h6.4982L61.9668 23.681h-6.4983L58.7377.358803Zm-8.1922 0L46.1602 13.794 44.2465.358803h-4.5448L33.9608 13.7541 33.2433.358803h-6.2991L29.1369 23.681h5.2226L40.818 8.93022 43.0904 23.681h5.1428L56.7249.358803h-6.1794ZM105.103 13.9136H89.6744c.0798 3.0299 1.8937 5.0233 4.5648 5.0233 2.0133 0 3.608-1.0765 4.8439-3.1296l5.2079 2.3674C102.501 21.7017 98.729 24 94.0798 24 87.741 24 83.535 19.7342 83.535 12.8771 83.535 5.34221 88.4784 0 95.4552 0c6.1398 0 10.0068 4.14618 10.0068 10.6046 0 1.0765-.12 2.1528-.359 3.309Zm-5.7807-4.46512c0-2.71095-1.515-4.42525-3.9468-4.42525-2.5117 0-4.5848 1.79402-5.143 4.42525h9.0898ZM6.63326 7.38685 0 15.1389h11.844l1.3309-3.6553H8.09965l3.10105-3.58555.01-.09511L9.19424 4.3319h9.07196l-7.0323 19.3492h4.8124L24.538.358823H2.60021L6.63326 7.38685Zm69.16744-2.3636c2.2923 0 4.301 1.23273 6.0551 3.34565l.9216-6.57488C81.1429.687707 78.9303 0 76 0c-5.8205 0-9.0896 3.40865-9.0896 7.73421 0 2.99999 1.6744 4.83389 4.4252 6.01989l1.3156.598c2.4518 1.0466 3.1097 1.5649 3.1097 2.6712 0 1.1461-1.1064 1.8737-2.7907 1.8737-2.7808.01-5.0332-1.4153-6.7276-3.8472l-.939 6.699C67.2332 23.2201 69.7067 24 72.9702 24c5.5315 0 8.9302-3.1894 8.9302-7.6147 0-3.0099-1.3355-4.9434-4.7044-6.4584l-1.4351-.67772c-1.9934-.88708-2.6711-1.37543-2.6711-2.35216 0-1.05647.9269-1.87377 2.7109-1.87377Z"></path>
+        </svg><img src="https://img.jiasorry.com/ja.jpg" alt="アバター" class="avatar"><div>
+          <strong>JIALE WANG</strong><br>
+          Wise Payments Ltd.<br>
+          1st Floor, Worship Square, 65 Clifton Street<br>
+          London, EC2A 4JE<br>
+          イギリス
+        </div>
+      </div>
+  
+      <div class="date">2022年7月12日</div>
+      <p>関係者各位：</p>
+  
+      <p>この書簡は、<strong>JIALE WANG</strong> 様の Wise アカウントで <strong>日本円 (JPY)</strong> の送金を受け取るための以下の口座情報を確認するためのものです。</p>
+  
+      <h2>口座名義人</h2>
+      <p>JIALE WANG</p>
+  
+      <h2>IBANコード</h2>
+      <p>GB05 TRWI 2308 0150 7207 95</p>
+  
+      <h2>スイフト/BICコード</h2>
+      <p>TRWIGB2LXXX</p>
+  
+      <h2>銀行名と住所</h2>
+      <p>
+        Wise Payments Limited<br>
+        1st Floor, Worship Square, 65 Clifton Street<br>
+        London, EC2A 4JE<br>
+        イギリス
+      </p>
+  
+      <p>敬具<br>Wise カスタマーサポート</p>
+  
+      <div class="footer">
+        <p>
+          Wise Payments Limited は「Wise」の名称で営業しており、英金融行動監視機構（FCA）により認可された電子マネー機関（登録番号: 900507）です。<br>
+          Wise Payments Limited は、イングランドおよびウェールズの Companies House に登録されています（会社登録番号: 07209813）。<br>
+          電話番号：+44 (0) 203 6950 999<br>
+          ウェブサイト：<a href="https://www.wise.com">https://www.wise.com</a><br>
+          サポートが必要ですか？ <a href="https://wise.com/help">wise.com/help</a> をご覧ください。
+        </p>
+      </div>
+    </div>
+  
+  
+  </body></html>
