@@ -19,6 +19,12 @@
       --radius: 22px;
     }
 
+    @font-face {
+      font-family: "HYTiaoTiao";
+      src: url("./assets/font/HYTiaoTiao.ttf") format("truetype");
+      font-display: swap;
+    }
+
     * { box-sizing: border-box; }
     html { min-width: 320px; }
 
@@ -117,8 +123,9 @@
 
     article {
       margin: 0;
+      font-family: "HYTiaoTiao", "PingFang SC", "Microsoft YaHei", sans-serif;
       font-size: clamp(27px, 3.15vw, 46px);
-      font-weight: 580;
+      font-weight: 400;
       line-height: 1.72;
       letter-spacing: .035em;
       text-align: left;
@@ -141,40 +148,37 @@
     }
 
     .refresh-button {
-      min-width: 260px;
-      min-height: 68px;
-      padding: 16px 34px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
+      width: 88px;
+      height: 88px;
+      padding: 0;
       border: 0;
-      border-radius: 999px;
-      color: var(--ink);
-      background: var(--accent);
-      box-shadow: 0 10px 24px rgba(98, 210, 34, .2);
-      font: inherit;
-      font-size: 19px;
-      font-weight: 750;
+      border-radius: 50%;
+      color: transparent;
+      background: #fff url("./assets/images/refresh.gif") center / cover no-repeat;
+      box-shadow: 0 9px 24px rgba(16, 20, 28, .16);
       cursor: pointer;
-      transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
 
     .refresh-button:hover {
       transform: translateY(-2px);
-      background: #82f63b;
-      box-shadow: 0 14px 30px rgba(98, 210, 34, .25);
+      box-shadow: 0 13px 30px rgba(16, 20, 28, .2);
     }
 
     .refresh-button:active { transform: translateY(0) scale(.98); }
 
-    .refresh-button svg {
-      width: 25px;
-      height: 25px;
-      transition: transform .45s ease;
-    }
 
-    .refresh-button.is-refreshing svg { transform: rotate(180deg); }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     :focus-visible {
       outline: 3px solid rgba(68, 176, 8, .42);
@@ -212,9 +216,8 @@
       .link-row a { padding: 0 17px; font-size: 15px; }
 
       .refresh-button {
-        width: 100%;
-        min-width: 0;
-        min-height: 64px;
+        width: 82px;
+        height: 82px;
       }
     }
 
@@ -244,9 +247,8 @@
           <a href="./ip.html">IP查询 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </nav>
 
-        <button class="refresh-button" type="button" onclick="showAnother()">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.93-4M4 4v5h5M4 13a8 8 0 0 0 14.93 4M20 20v-5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>再来一篇</span>
+        <button class="refresh-button" type="button" onclick="showAnother()" title="点击刷新，再来一篇">
+          <span class="sr-only">再来一篇</span>
         </button>
       </div>
     </main>
@@ -256,11 +258,6 @@
   <script>
     function showAnother() {
       randomSoul();
-      const button = document.querySelector('.refresh-button');
-      button.classList.remove('is-refreshing');
-      void button.offsetWidth;
-      button.classList.add('is-refreshing');
-      window.setTimeout(() => button.classList.remove('is-refreshing'), 460);
     }
 
     randomSoul();
