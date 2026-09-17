@@ -72,37 +72,32 @@
       text-decoration: none;
     }
 
-    .site-nav,
-    .link-row {
+    .site-nav {
       display: flex;
       align-items: center;
-      gap: 0;
+      gap: 10px;
     }
 
-    .site-nav a,
-    .link-row a {
+    .site-nav a {
+      width: 48px;
+      height: 48px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      min-height: 44px;
-      padding: 0 22px;
-      font-size: 16px;
-      font-weight: 650;
-      text-underline-offset: 5px;
-      text-decoration-thickness: 1px;
-      transition: color .18s ease;
+      justify-content: center;
+      border-radius: 14px;
+      transition: transform .18s ease, background-color .18s ease;
     }
 
-    .site-nav a + a,
-    .link-row a + a { border-left: 1px solid var(--line); }
+    .site-nav a:hover {
+      transform: translateY(-2px);
+      background: #f1f2f3;
+    }
 
-    .site-nav a:hover,
-    .link-row a:hover { color: #378a09; }
-
-    .site-nav svg,
-    .link-row svg {
-      width: 17px;
-      height: 17px;
+    .site-nav img {
+      width: 34px;
+      height: 34px;
+      display: block;
+      object-fit: contain;
       flex: none;
     }
 
@@ -201,7 +196,9 @@
       }
 
       .brand { font-size: 25px; }
-      .site-nav { display: none; }
+      .site-nav { gap: 4px; }
+      .site-nav a { width: 44px; height: 44px; }
+      .site-nav img { width: 31px; height: 31px; }
 
       main { padding: clamp(54px, 10vh, 92px) 28px 46px; }
 
@@ -212,8 +209,6 @@
       }
 
       .actions { padding-top: 54px; gap: 28px; }
-
-      .link-row a { padding: 0 17px; font-size: 15px; }
 
       .refresh-button {
         width: 82px;
@@ -231,8 +226,12 @@
     <header class="site-header">
       <a class="brand" href="./" aria-label="JA 首页">JA</a>
       <nav class="site-nav" aria-label="外部链接">
-        <a href="https://v.douyin.com/ihhSTore/" target="_blank" rel="noopener noreferrer">抖音 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a href="./ip.html">IP查询 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="https://v.douyin.com/ihhSTore/" target="_blank" rel="noopener noreferrer" aria-label="抖音" title="抖音">
+          <img src="./assets/images/douyin-logo.svg" alt="">
+        </a>
+        <a href="./ip.html" aria-label="IP 查询" title="IP 查询">
+          <img src="./assets/images/ip-query-logo.svg" alt="">
+        </a>
       </nav>
     </header>
 
@@ -242,11 +241,6 @@
       </section>
 
       <div class="actions">
-        <nav class="link-row" aria-label="快捷链接">
-          <a href="https://v.douyin.com/ihhSTore/" target="_blank" rel="noopener noreferrer">抖音 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="./ip.html">IP查询 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </nav>
-
         <button class="refresh-button" type="button" onclick="showAnother()" title="点击刷新，再来一篇">
           <span class="sr-only">再来一篇</span>
         </button>
